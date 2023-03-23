@@ -1,0 +1,38 @@
+name: Build Releases
+on:
+  push:
+    tags:
+      - v*.*.*
+
+env:
+  CGO_ENABLED: 0
+
+jobs:
+  build-cross:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go_version:
+          - 1.16
+        os:
+          - linux
+        arch:
+          - amd64
+          - 386
+          - arm64
+          - arm
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go_version }}
+      - name: Build
+        run: |
+          GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags="-s -w" -o askai_${{ matrix.os }}_${{ matrix.arch }} main.go
+          zip askai_${{ matrix.os }}_${{ matrix.arch }}.zip askai_${{ matrix.os }}_${{ matrix.arch }}
+      - name: Upload Github Assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: askai_${{ matrix.os }}_${{ matrix.arch }}
+          path: askai_${{ matrix.os }}_${{ matrix.arch }}.zip
