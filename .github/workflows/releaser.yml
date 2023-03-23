@@ -31,8 +31,9 @@ jobs:
         run: |
           GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags="-s -w" -o askai_${{ matrix.os }}_${{ matrix.arch }} main.go
           zip askai_${{ matrix.os }}_${{ matrix.arch }}.zip askai_${{ matrix.os }}_${{ matrix.arch }}
+
       - name: Upload Github Assets
-        uses: actions/upload-artifact@v3
+        uses: softprops/action-gh-release@v1
         with:
-          name: askai_${{ matrix.os }}_${{ matrix.arch }}
-          path: askai_${{ matrix.os }}_${{ matrix.arch }}.zip
+          files: askai_${{ matrix.os }}_${{ matrix.arch }}.zip
+          prerelease: ${{ contains(github.ref, '-') }}
