@@ -12,6 +12,8 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
+const kMaxTokens = 4000
+
 func main() {
 	apiKey, err := getAPIKey()
 	if err != nil {
@@ -67,7 +69,7 @@ func main() {
 
 		req := openai.ChatCompletionRequest{
 			Model:     openai.GPT3Dot5Turbo,
-			MaxTokens: 500,
+			MaxTokens: kMaxTokens,
 			Messages:  history,
 			Stream:    true,
 		}
@@ -149,7 +151,7 @@ func simpleMode(c *openai.Client, ctx context.Context, prompt string) {
 
 	req := openai.ChatCompletionRequest{
 		Model:     openai.GPT3Dot5Turbo,
-		MaxTokens: 20,
+		MaxTokens: kMaxTokens,
 		Messages: []openai.ChatCompletionMessage{
 			{
 				Role:    openai.ChatMessageRoleUser,
