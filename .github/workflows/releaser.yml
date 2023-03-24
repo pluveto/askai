@@ -16,7 +16,8 @@ jobs:
           - 1.18
         os:
           - linux
-          - macos
+          - darwin
+          - windows
         arch:
           - amd64
           - 386
