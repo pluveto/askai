@@ -16,6 +16,7 @@ jobs:
           - 1.18
         os:
           - linux
+          - macos
         arch:
           - amd64
           - 386
