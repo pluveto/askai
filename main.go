@@ -12,7 +12,7 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
-const kMaxTokens = 4000
+const kMaxTokens = 400000
 
 func main() {
 	apiKey, err := getAPIKey()
